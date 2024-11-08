@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href="/designapp/insertstudent">Add Student</a> ||  <a href="/designapp/viewstudent">View Student</a>
+    <hr>
+    <form action="" method="post">
+       {% csrf_token %}
+       <input type="text" placeholder="Enter rno" name="txtrno" /> <br/>
+       <input type="text" placeholder="Enter name" name="txtname" /> <br/>
+       <input type="text" placeholder="Enter branch" name="txtbranch" /> <br/>
+       <input type="text" placeholder="Enter fees" name="txtfees" /> <br/>
+       <input type="submit" value="Insert" />
+
+    </form>
+    {{key}}
+</body>
+</html>

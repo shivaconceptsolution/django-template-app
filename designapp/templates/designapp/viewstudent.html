@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href="/designapp/insertstudent">Add Student</a> ||  <a href="/designapp/viewstudent">View Student</a>
+    <hr>
+    <table border="1">
+        <tr><th>RNO</th><th>NAME</th><th>Branch</th><th>Fees</th></tr>
+        {% for item in key %}
+           <tr><td>{{item.rno}}</td><td>{{item.name}}</td><td>{{item.branch}}</td><td>{{item.fee}}</td></tr>
+
+        {% endfor %}
+    </table>
+</body>
+</html>
