@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .models import Student
 def home(request):
     
@@ -32,3 +32,21 @@ def insertstudent(request):
 def viewstudent(request):
     res = Student.objects.all()
     return render(request,"designapp/viewstudent.html",{"key":res})
+def editstudent(request):
+    sid=request.GET["id"]
+    res = Student.objects.get(pk=sid)
+    if request.method=="POST":
+        res.rno=request.POST.get("txtrno")
+        res.name=request.POST.get("txtname")
+        res.branch=request.POST.get("txtbranch")
+        res.fee = request.POST.get("txtfees")
+        res.save()
+        return redirect("/designapp/viewstudent")
+    return render(request,"designapp/editstudent.html",{"key":res})
+
+
+def deletestudent(request):
+    sid=request.GET["id"]
+    res = Student.objects.get(pk=sid)
+    res.delete()
+    return redirect("/designapp/viewstudent")

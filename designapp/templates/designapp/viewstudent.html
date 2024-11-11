@@ -11,7 +11,9 @@
     <table border="1">
         <tr><th>RNO</th><th>NAME</th><th>Branch</th><th>Fees</th></tr>
         {% for item in key %}
-           <tr><td>{{item.rno}}</td><td>{{item.name}}</td><td>{{item.branch}}</td><td>{{item.fee}}</td></tr>
+           <tr><td>{{item.rno}}</td><td>{{item.name}}</td><td>{{item.branch}}</td><td>{{item.fee}}</td>
+           <td><a href="editstudent?id={{item.id}}">Edit</a></td><td><a href="deletestudent?id={{item.id}}">Delete</a></td>
+        </tr>
 
         {% endfor %}
     </table>
