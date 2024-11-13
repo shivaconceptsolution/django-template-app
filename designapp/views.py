@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .models import Student
+from .models import Student,Reg
 def home(request):
     
     return render(request,"designapp/home.html")
@@ -50,3 +50,20 @@ def deletestudent(request):
     res = Student.objects.get(pk=sid)
     res.delete()
     return redirect("/designapp/viewstudent")
+
+def stureg(request):
+   if request.method=='POST':
+      obj = Reg(email=request.POST.get('txtemail'),password=request.POST.get('txtpass'),mobileno=request.POST.get('txtmobile'),name=request.POST.get('txtname'))
+      obj.save()
+      return render(request,"designapp/stureg.html",{"key":"data inserted succcessfully"})
+   else:
+     return render(request,"designapp/stureg.html")
+def stulogin(request):
+    if request.method=='POST':
+      obj = Reg.objects.filter(email=request.POST.get('txtemail'),password=request.POST.get('txtpass'))
+      if obj.count()>0:
+         return redirect('/designapp/viewstudent')
+      else:
+        return render(request,"designapp/stulogin.html",{"key":"invalid userid and password"})
+    else:
+      return render(request,"designapp/stulogin.html")

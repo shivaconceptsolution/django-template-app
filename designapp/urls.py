@@ -9,7 +9,9 @@ urlpatterns=[
     path('insertstudent',views.insertstudent,name='insertstudent'),
     path('viewstudent',views.viewstudent,name='viewstudent'),
     path('editstudent',views.editstudent,name='editstudent'),
-    path('deletestudent',views.deletestudent,name='deletestudent')
+    path('deletestudent',views.deletestudent,name='deletestudent'),
+    path('stureg',views.stureg,name='stureg'),
+    path('stulogin',views.stulogin,name='stulogin')
 
 
 ]
