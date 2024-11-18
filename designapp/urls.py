@@ -11,7 +11,8 @@ urlpatterns=[
     path('editstudent',views.editstudent,name='editstudent'),
     path('deletestudent',views.deletestudent,name='deletestudent'),
     path('stureg',views.stureg,name='stureg'),
-    path('stulogin',views.stulogin,name='stulogin')
-
+    path('stulogin',views.stulogin,name='stulogin'),
+    path('stulogout',views.stulogout,name='stulogout'),
+    path('stureview',views.stureview,name='stureview')
 
 ]

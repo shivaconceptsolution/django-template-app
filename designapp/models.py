@@ -16,3 +16,8 @@ class Reg(models.Model):
     password=models.CharField(max_length=10)
     mobileno=models.CharField(max_length=12)
     name=models.CharField(max_length=50)
+
+class Review(models.Model):
+    rating=models.FloatField()
+    email = models.CharField(max_length=50)
+    message=models.CharField(max_length=500)    

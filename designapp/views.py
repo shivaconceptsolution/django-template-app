@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .models import Student,Reg
+from .models import Student,Reg,Review
 def home(request):
     
     return render(request,"designapp/home.html")
@@ -22,34 +22,48 @@ def gallery(request):
     return render(request,"designapp/gallery.html")
 
 def insertstudent(request):
-   if request.method=='POST':
+   if request.session.has_key('userkey'):
+     if request.method=='POST':
       obj = Student(rno=request.POST.get('txtrno'),name=request.POST.get('txtname'),branch=request.POST.get('txtbranch'),fee=request.POST.get('txtfees'))
       obj.save()
       return render(request,"designapp/student.html",{"key":"data inserted succcessfully"})
+     else:
+       return render(request,"designapp/student.html")
    else:
-     return render(request,"designapp/student.html")
+      return redirect('/designapp/stulogin')
 
 def viewstudent(request):
-    res = Student.objects.all()
-    return render(request,"designapp/viewstudent.html",{"key":res})
+     if request.session.has_key('userkey'):
+       res = Student.objects.all()
+       return render(request,"designapp/viewstudent.html",{"key":res})
+     else:
+        return redirect('/designapp/stulogin')
+
 def editstudent(request):
-    sid=request.GET["id"]
-    res = Student.objects.get(pk=sid)
-    if request.method=="POST":
+    if request.session.has_key('userkey'):
+     sid=request.GET["id"]
+     res = Student.objects.get(pk=sid)
+     if request.method=="POST":
         res.rno=request.POST.get("txtrno")
         res.name=request.POST.get("txtname")
         res.branch=request.POST.get("txtbranch")
         res.fee = request.POST.get("txtfees")
         res.save()
         return redirect("/designapp/viewstudent")
-    return render(request,"designapp/editstudent.html",{"key":res})
+     return render(request,"designapp/editstudent.html",{"key":res})
+    else:
+        return redirect('/designapp/stulogin')
 
 
 def deletestudent(request):
-    sid=request.GET["id"]
-    res = Student.objects.get(pk=sid)
-    res.delete()
-    return redirect("/designapp/viewstudent")
+    if request.session.has_key('userkey'):
+     sid=request.GET["id"]
+     res = Student.objects.get(pk=sid)
+     res.delete()
+     return redirect("/designapp/viewstudent")
+    else:
+     return redirect('/designapp/stulogin')
+
 
 def stureg(request):
    if request.method=='POST':
@@ -62,8 +76,23 @@ def stulogin(request):
     if request.method=='POST':
       obj = Reg.objects.filter(email=request.POST.get('txtemail'),password=request.POST.get('txtpass'))
       if obj.count()>0:
-         return redirect('/designapp/viewstudent')
+         request.session['userkey']=request.POST.get('txtemail')
+         return redirect('/designapp/stureview')
       else:
         return render(request,"designapp/stulogin.html",{"key":"invalid userid and password"})
     else:
       return render(request,"designapp/stulogin.html")
+def stulogout(request):
+    del request.session['userkey']
+    return redirect('/designapp/stulogin')
+def stureview(request):
+    if request.method=="POST":
+        data = Review.objects.filter(email=request.session['userkey'])
+        if data.count()==0:
+          obj = Review(rating=request.POST["rating"],email=request.session['userkey'],message=request.POST['txtmsg'])
+          obj.save()
+          return render(request,'designapp/stureview.html',{"key":"feedback submitted successfully"}) 
+        else:
+           r=Review.objects.filter(email=request.session['userkey']) 
+           return render(request,'designapp/editreview.html',{"stureview":r})   
+    return render(request,'designapp/stureview.html')
