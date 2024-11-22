@@ -1,7 +1,6 @@
 from django.shortcuts import render,redirect
 from .models import Student,Reg,Review
 def home(request):
-    
     return render(request,"designapp/home.html")
 def about(request):
     obj = Student.objects.get(pk=1)
@@ -96,3 +95,14 @@ def stureview(request):
            r=Review.objects.filter(email=request.session['userkey']) 
            return render(request,'designapp/editreview.html',{"stureview":r})   
     return render(request,'designapp/stureview.html')
+def stueditreview(request):
+    if request.method=="POST":
+        obj = Review.objects.get(pk=request.POST['txtid'])
+        obj.rating=request.POST["rating"]
+        obj.email=request.session['userkey']
+        obj.message=request.POST['txtmsg']
+        obj.save()
+        return redirect('/designapp/stureview')
+def stuviewreview(request):
+  obj = Review.objects.filter(email=request.session['userkey'])
+  return render(request,"designapp/viewreview.html",{"key":obj})

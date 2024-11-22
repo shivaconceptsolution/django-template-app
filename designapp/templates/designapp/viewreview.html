@@ -30,9 +30,9 @@
 </head>
 <body>
     <a href="/designapp/insertstudent">Add Student</a> ||  <a href="/designapp/viewstudent">View Student</a>||  <a href="/designapp/stulogout">Logout</a> ||  <a href="/designapp/stureview">Manage Review</a> | <a href="/designapp/stuviewreview">View Review</a>
-    <h1>Previous Review</h1>
+    <h1>View Review</h1>
     <div class="star-rating">
-        {% for d in stureview %}
+        {% for d in key %}
         {% if d.rating == 5.0 %}
         <input type="radio"  name="rating" value="5">
         <label for="star5" style="color:gold" >&#9733;</label>
@@ -89,37 +89,16 @@
         <input type="radio"  name="rating" value="1" >
         <label for="star1" style="color:gold">&#9733;</label>
         {% endif %}
-        {% endfor %}
-    </div>
-    <h2>Edit Your Review</h2>
-    <form action="/designapp/stueditreview" method="post">
-        {% csrf_token %}
-      
-        {% for d in stureview %}
-        <input type="hidden" value="{{d.id}}" name="txtid" />
-        <br/>
-          <div class="star-rating">
-            <input type="radio" id="star5" name="rating" value="5">
-            <label for="star5">&#9733;</label>
-            <input type="radio" id="star4" name="rating" value="4">
-            <label for="star4">&#9733;</label>
-            <input type="radio" id="star3" name="rating" value="3">
-            <label for="star3">&#9733;</label>
-            <input type="radio" id="star2" name="rating" value="2">
-            <label for="star2">&#9733;</label>
-            <input type="radio" id="star1" name="rating" value="1">
-            <label for="star1">&#9733;</label>
         </div>
-        <br> <br>
-        <textarea rows="10" cols="50" name="txtmsg">
-            {{d.message}}
-        </textarea>
-        <br>
+        <br />
+        <p> {{d.message}}</p>
+           
+       <br>
         {% endfor %}
-        <input type="submit" name="btnsubmit" value="Edit Review" />
       
-    </form>
+      
     
-    {{key}}
+    
+</div>
 </body>
 </html>

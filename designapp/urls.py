@@ -13,6 +13,8 @@ urlpatterns=[
     path('stureg',views.stureg,name='stureg'),
     path('stulogin',views.stulogin,name='stulogin'),
     path('stulogout',views.stulogout,name='stulogout'),
-    path('stureview',views.stureview,name='stureview')
+    path('stureview',views.stureview,name='stureview'),
+    path('stuviewreview',views.stuviewreview,name='stuviewreview'),
+    path('stueditreview',views.stueditreview,name='stueditreview')
 
 ]
